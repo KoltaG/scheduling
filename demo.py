@@ -6,7 +6,7 @@ from matplotlib.animation import FuncAnimation
 def animate_nodes(G, node_colors, pos=None, *args, **kwargs):
   # define graph layout if None given
   if pos is None:
-    pos = nx.circular_layout(G)
+    pos = nx.random_layout(G)
 
   # draw graph
   nodes = nx.draw_networkx_nodes(G, pos, *args, **kwargs)
@@ -21,10 +21,10 @@ def animate_nodes(G, node_colors, pos=None, *args, **kwargs):
     return nodes,
 
   fig = plt.gcf()
-  animation = FuncAnimation(fig, update, interval=50, frames=len(node_colors), blit=True)
+  animation = FuncAnimation(fig, update, interval=100, frames=len(node_colors), blit=True)
   return animation
 
-total_nodes = 12
+total_nodes = 7
 
 graph = nx.Graph()
 nodes = np.arange(total_nodes)
@@ -49,4 +49,5 @@ for i in range(time_steps):
   node_colors.append(colors)
 
 animation = animate_nodes(graph, node_colors)
+plt.show()
 animation.save('demo.gif', writer='imagemagick', savefig_kwargs={'facecolor':'white'}, fps=1)
